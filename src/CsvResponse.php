@@ -10,8 +10,10 @@ use Nette;
  *
  * @package OHWeb\Application\Responses
  */
-class CsvResponse extends Nette\Object implements Nette\Application\IResponse
+class CsvResponse implements Nette\Application\IResponse
 {
+    use Nette\SmartObject;
+
 	/** standard glues */
 	const COMMA = ',',
 		SEMICOLON = ';',
@@ -62,7 +64,7 @@ class CsvResponse extends Nette\Object implements Nette\Application\IResponse
 	/**
 	 * In accordance with Nette Framework accepts only UTF-8 input. For output @see setOutputCharset().
 	 *
-	 * @param array[]|\Traversable $data
+	 * @param array|\Traversable $data
 	 * @param string               $filename
 	 * @param bool                 $addHeading whether add first row from data array keys (keys are taken from first row)
 	 *
@@ -190,7 +192,7 @@ class CsvResponse extends Nette\Object implements Nette\Application\IResponse
 	 * @param Nette\Http\IRequest $httpRequest
 	 * @param Nette\Http\IResponse $httpResponse
 	 */
-	public function send(Nette\Http\IRequest $httpRequest, Nette\Http\IResponse $httpResponse) {
+	public function send(Nette\Http\IRequest $httpRequest, Nette\Http\IResponse $httpResponse): void {
 		$httpResponse->setContentType($this->contentType, $this->outputCharset);
 		$attachment = 'attachment';
 		if (!empty($this->filename)) {
